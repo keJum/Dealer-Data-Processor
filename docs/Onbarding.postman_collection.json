@@ -1,0 +1,399 @@
+{
+	"info": {
+		"_postman_id": "d67c37ab-ca6e-42e3-8857-d58ca4aa0c3c",
+		"name": "Onbarding",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Пользователи",
+			"item": [
+				{
+					"name": "Регистрация",
+					"item": [
+						{
+							"name": "Регистрация пользователя",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"test@tgmai.com\",\n    \"password\": \"123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{onboardin_host}}/user/registration",
+									"host": [
+										"{{onboardin_host}}"
+									],
+									"path": [
+										"user",
+										"registration"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Потверждение почты",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-TOKEN",
+										"type": "text",
+										"value": "92b8573edf298e402f4266d3b43514cd"
+									}
+								],
+								"url": {
+									"raw": "{{onboardin_host}}/user/email/confirmation",
+									"host": [
+										"{{onboardin_host}}"
+									],
+									"path": [
+										"user",
+										"email",
+										"confirmation"
+									]
+								},
+								"description": "Потверждение электронной почты\n"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Сброс пароля",
+					"item": [
+						{
+							"name": "Запрос на сброс пароля",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"test@gmail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{onboardin_host}}/user/password/reset",
+									"host": [
+										"{{onboardin_host}}"
+									],
+									"path": [
+										"user",
+										"password",
+										"reset"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Изменение пароля",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-TOKEN",
+										"value": "92b8573edf298e402f4266d3b43514cd",
+										"type": "text"
+									},
+									{
+										"key": "X-RESET-TOKEN",
+										"value": "c8e01c81dcf261d204d3c87cd33f3db8",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"password\": \"123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{onboardin_host}}/user/password/reset/confirmation",
+									"host": [
+										"{{onboardin_host}}"
+									],
+									"path": [
+										"user",
+										"password",
+										"reset",
+										"confirmation"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Oauth2",
+					"item": [
+						{
+							"name": "Авторизация",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"client_id\": \"1fad317a39357ab1adaa7cc438821f7c\",\n    \"client_secret\": \"7f73cbe830a940383687e5feb6041e75b778d141f98f5676d99c5bb9b7431c069539b8231521664517ecf9c6a64e6751420a570c88e7e1293f36f1ab44b9e6c5\",\n    \"username\": \"test@tgmai.com\",\n    \"password\": \"123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{onboardin_host}}/token/auth",
+									"host": [
+										"{{onboardin_host}}"
+									],
+									"path": [
+										"token",
+										"auth"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Обновление токена",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "refresh_token",
+											"value": "def50200675cac8fc8704f5042efb4434de972692ded0919b51fb264a4e3a37a72f347169db9ae729a5546b3a8beaa25cca67b5d88fab9ffb9cdf690731744730ed950ceec6f9bf12fe7aab0269435c55cf14da0945160ce55067ace1009f342804681b733396091111d797c0ab5d6f0d1356010ac1f184326c0b36d4855bc1b2d90743bb02f95275e67b9f40ad934814961bec503faac9527400736769d9d461419a05ddb43cde6e5cfa64c062ee359817e69530b80f348474fb309b3a2010838198000f2620d7683d2869a4c5e0426e79f0a8d2e59b88c634b67b9809de3064cf98d3a7815f523455354815e7ee71a417b1c81ea2b346060c04fe29681d7924d44fe8cc4c9522940d550a59cdd49536a343e8068ab1b6ddb477054c5605552d3fd8b23c481698c751860c465009de3f1aebe808c12e91c759566451fb73dd6eb10355689990ac2fc07498c27c68b370a15edf385c9c9917a742875dc50461d4a3ab5ca880399886a38261d81d83b573ac4dbca7083a34d541ef6315247f89aadcfb0389eed2d51e2a51956e5d945c9f9050ed3",
+											"type": "text"
+										},
+										{
+											"key": "client_id",
+											"value": "e87631d75029f514020557f293289ac1",
+											"type": "text"
+										},
+										{
+											"key": "client_secret",
+											"value": "70cd65fbef4c5c7c98f4273e5a4f0ae7492f4b057c4f15b9270a36eb548feaafe54c56fd6120f920331a12bb73b45455e994664ff8e82a5ee1e88e9d79c5990d",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{onboardin_host}}/token/update",
+									"host": [
+										"{{onboardin_host}}"
+									],
+									"path": [
+										"token",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Выход из авторизации ",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJlODc2MzFkNzUwMjlmNTE0MDIwNTU3ZjI5MzI4OWFjMSIsImp0aSI6Ijk3ZDViMTg3NDdlNmEwYjdkZWJlMzU5YWYwZTgxNDRjZDMyOTU4MTY3NmJlODg2ZjYyNjFlN2YwODI1MzIzNzZkMGNmNjE4ZDI4MTRkMmRmIiwiaWF0IjoxNjIzODM4ODc4LjU3MTA4NywibmJmIjoxNjIzODM4ODc4LjU3MTExOSwiZXhwIjoxNjIzODQyNDc4LjQ4MTM3Miwic3ViIjoidGVzMXQxMzI0QGdtYWlsLmNvbSIsInNjb3BlcyI6W119.Ca3PRLZ-ZKYgrBhENzoxUuCp_k9iZe0xBg6P43niMIdXZ9gLR-iCpQzfFo55uwh-hhTpksMR5qkqMzNMGnJ2tMg3XMfCgMHR2MaQ8QtGqp0HWJjRMrufnPulwf4RHqp9DL0iiTMNPS5mxgJTQCvnb6fCdbO6SvHTqz-WJy3ZAAjvNG41zf2qewyfDv1utF4Iwyrxz8QSdg7jPuOJnji1XXG7Ytv3jEFIkWtG8noPTnipBoMubGa2WE61DLZovWwxuYsQJknYThw7IB8C7rpyMcDk8Zlk4sTmTRYTEfo4EorxnnTSNgk-XYE44cRzhMSsy-7saCA7N8Zr40uIP68nVQ",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{onboardin_host}}/api/logout",
+									"host": [
+										"{{onboardin_host}}"
+									],
+									"path": [
+										"api",
+										"logout"
+									]
+								},
+								"description": "Сброс токенов."
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Управление пользователями",
+					"item": [
+						{
+							"name": "Список пользователей",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJjMjA0NzBlYmNlMjhhMzNjYTc3YmY5Y2RiOGQzODE3MSIsImp0aSI6Ijk1NjBmYTBmZGM1YjRmNmRiMWZjNGE0OWI0ZGVmOGQ5YzdmODNhNGJmYmY2MmQxZTE5MWJiMDczODg5ZDJjYzhlYTY1NDQ0MzI2ZWU5ODdkIiwiaWF0IjoxNjI0MDEyNDAxLjIzNjA3NywibmJmIjoxNjI0MDEyNDAxLjIzNjA5NywiZXhwIjoxNjI0MDE2MDAxLjE3OTQ2OSwic3ViIjoidGVzdEBnbWFpbC5jb20iLCJzY29wZXMiOltdfQ.smuYJhHCP1qNo_lantxZxoL2ouW_GVaHw6MfPoKorLpdyGrZGLEXAGaztjeZtwkBugEPodkiJOLNgXp5u8T0z18w8YX75hMNRQOvJeOWYwTsOPlbTyu6_CprO73sQd-xwuCIgZIYCxC6DGn5S90ZGKKQqAHUVTsWMSQS-daPbEX11_5lgOz_U0U6vk7cuU0ozxIMSsNl22zfeLqN_k78Svx7i-mMEOFCu7ubJJ2Ao2sK0cKKsPUt6U2Po7XAF7oV_E_X6RkucVqOlxZytr_BwvP7HU_sywKbVmjcQonorCAtE6RC91JSzodYGwJXYFL6AFtBg4Kn5XZrcoyGg3amzw",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{onboardin_host}}/api/admin/user/list",
+									"host": [
+										"{{onboardin_host}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"user",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Блокировка пользователя",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJjMjA0NzBlYmNlMjhhMzNjYTc3YmY5Y2RiOGQzODE3MSIsImp0aSI6ImJiODljMTJhMGZmZGUxM2E5YWNkNTBiMDdjYWUxNjlhYzdjY2YzNTY0OWIxY2I5NWM5YzY2MmY0MmRkY2UzMzY4ZDE1MmIwN2RkZjM2OTQ2IiwiaWF0IjoxNjI0MDE1MDA4LjAwMzk0MSwibmJmIjoxNjI0MDE1MDA4LjAwMzk2OCwiZXhwIjoxNjI0MDE4NjA3Ljk0Nzk1Niwic3ViIjoidGVzdDFAZ21haWwuY29tIiwic2NvcGVzIjpbXX0.SI46-aG0d9KdxU6YYC_3FX9i6AvTyLRv8vDlS95T_zNKb3Nr1Kvl_OaZCFkTSmgdZsrDDHYOq9YIs4AUfiCRoUeRpJCWzqGJyIflWvlFgehYxNEBmrILroV-g3oS_-ZWoyh3ZVQmyej8SHKhLfwHa74K0mDsl7tNdolk7rTH6IaYRZEyp-CAwHm927tdOvGXIsnSTN5T550tApkxb_fV7lP2lw-7lvSGPvWnLbylMjSqT0Hu2ffgaIjeeT0qbqHTKjdYv-vs7SLZwr8lvMRKXyqV13tfrQrWHFi7Tkh3kalkc8DsAfLD2IR5QzRXmuHnIy-stbplk3uN1Dt7loWIYg",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"test1@gmail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{onboardin_host}}/api/admin/user/block",
+									"host": [
+										"{{onboardin_host}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"user",
+										"block"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Удаление пользователя",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJjMjA0NzBlYmNlMjhhMzNjYTc3YmY5Y2RiOGQzODE3MSIsImp0aSI6IjczM2MyYjFhMmNmOTg4N2QzNjAxMzdiMWQ1YmYyMmJkZTMxOWQ3NDI1NGYwMjk1NDY1MmJmMWMzMWYzN2ZlY2MxODMwM2ZlMjQ3MzZlOTVlIiwiaWF0IjoxNjI0MDE2NjAzLjkxNzkyNSwibmJmIjoxNjI0MDE2NjAzLjkxNzk0NSwiZXhwIjoxNjI0MDIwMjAzLjg1NzUwMiwic3ViIjoidGVzdEBnbWFpbC5jb20iLCJzY29wZXMiOltdfQ.bJRXoyRC8qaCdYZbtLXcMFLbDoYPX1JpuSiYX1zSYuRyYWL73dXQezI_zG3Ssaw983xP91u5_UbkwJPbwM_6JpHXAdCe0wJ7DTO54QFn99M3GXXjyppX0tTtGI3y_fJ6DG-9MzRYNkLtVpodA2kUJQjQPICb_Ubu72UWSgxeLKdDahtCHXLz754ldXk0vjvDtnVYaTv7YVTFg9xjSVnMOhyIw7J-Wtj_YkvMiDGcExMeLtNzOk0hmuAR_QF7wglzYLmspr8HD6a_nAvyDSwGOnWy5nLF9Jna6Hbx9PTKk9FT3ET1yAVIORUAe2kF4xaCTS_2itighk0wX68NeU39Dg"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"test1@gmail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{onboardin_host}}/api/administration/delete",
+									"host": [
+										"{{onboardin_host}}"
+									],
+									"path": [
+										"api",
+										"administration",
+										"delete"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Тест oauht2",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "SI6IjZjOGJlMzAxMWRjYzIxODRjNTdjZDU1NjJiZWUxNTNhZmI1OWI0NTEyNWYyMzM0MTdlMTkwMDc4Y2NmZjhhNTRiNDBkMzM0OWJhMjY0Njg2IiwiaWF0IjoxNjIzNzQ3MDk2LjgyNDM5NywibmJmIjoxNjIzNzQ3MDk2LjgyNDQyMSwiZXhwIjoxNjIzNzUwNjk2Ljc1NjM4Niwic3ViIjoidGVzMXQxMzI0QGdtYWlsLmNvbSIsInNjb3BlcyI6W119.VTE6uD3f4BTbvWvVOfItwvcVaHpWbv1MJ7kE_mVebUJaxCblv-sX-mmScz3mnJdVj3KCJWMRn8rg1NFlwzGD98h0TBtI0fvWKKAqAaGEgSjakHiBxyBWzY30_2QzWL2yHZo_PVfbJoeIfCtjo_xGoY0H-xD-YQN8coA6O85HTG8I7yIXl_59LUG6zXlnkDBpM3g7cSCL59HnLrNLLzjLUVakX9Em4BiE81i8MwKumbdOdiKMgbzRpPotfhsf2l5z56np8ZqyXPCr0qye7jI0gJgpbITMDDn4B23QU_Urg7N-9FTi4rEdqPq_bBSJmR84i8trJCSU-8tIt0G_okR93g",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{onboardin_host}}/api/test",
+					"host": [
+						"{{onboardin_host}}"
+					],
+					"path": [
+						"api",
+						"test"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "onboardin_host",
+			"value": "http://localhost:8080"
+		}
+	]
+}

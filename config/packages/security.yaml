@@ -1,0 +1,47 @@
+security:
+    encoders:
+        App\Entity\User:
+            algorithm: auto
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+    firewalls:
+#      Для web страницы а так как используется только api то тогда не нужно
+#        dev:
+#            pattern: ^/(_(profiler|wdt)|css|images|js)/
+#            security: false
+        api_token:
+            pattern: ^/token
+            security: false
+        api:
+            pattern: ^/api
+            security: true
+            stateless: true
+            oauth2: true
+        main:
+            anonymous: true
+            lazy: true
+            provider: app_user_provider
+            guard:
+                authenticators:
+                    - App\Authenticators\TokenAuthenticator
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/user/email/confirmation, roles: ROLE_USER }
+         - { path: ^/user/password/reset/confirmation, roles: ROLE_USER }
+         - { path: /admin, roles: ROLE_ADMIN }
+#         - { path: ^/authorize, roles: IS_AUTHENTICATED_REMEMBERED }

@@ -1,0 +1,14 @@
+trikoder_oauth2:
+    authorization_server:
+        private_key: /var/oauth/private.key
+        private_key_passphrase: null
+        access_token_ttl: PT1H
+        refresh_token_ttl: P1M
+        encryption_key: '%env(string:OAUTH2_ENCRYPTION_KEY)%'
+
+    resource_server:
+        public_key: /var/oauth/public.key
+
+    persistence:
+        doctrine: null
+    role_prefix: ROLE_OAUTH2_

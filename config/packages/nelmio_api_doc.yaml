@@ -1,0 +1,19 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: Onboarding
+            description:
+            version: 1.0.0
+    areas:
+        path_patterns:
+            - ^/user/registration$
+            - ^/user/email/confirmation$
+            - ^/user/password/reset$
+            - ^/user/password/reset/confirmation$
+            - ^/api/logout$
+            - ^/token/update$
+            - ^/token/auth$
+            - ^/api/admin/user/list$
+            - ^/api/admin/user/block$
+            - ^/api/admin/user/delete$
+            - ^/api/admin/users/send$

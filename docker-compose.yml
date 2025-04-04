@@ -1,0 +1,64 @@
+version: "3.3"
+
+services:
+  web-server:
+    build:
+      context: .
+      dockerfile: docker/dev/Nginx.Dockerfile
+    ports:
+      - "8080:80"
+    links:
+      - fpm
+    volumes:
+      - ./:/var/www/onboarding
+  fpm:
+    build:
+      context: .
+      dockerfile: docker/dev/Fpm.Dockerfile
+    volumes:
+      - ./:/var/www/onboarding
+    links:
+      - db
+      - rabbitmq
+  fpm-phpunit:
+    build:
+      context: .
+      dockerfile: docker/dev/PHPUnit.Dockerfile
+    volumes:
+      - ./:/var/www/onboarding
+    links:
+      - db-test
+      - rabbitmq
+  db:
+    image: mysql:5.7
+    ports:
+      - "33061:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=onboarding
+    volumes:
+      - dbdata:/var/lib/mysql
+  db-test:
+    image: mysql:5.7
+    ports:
+      - "33062:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=onboarding
+  mail:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+  rabbitmq:
+    build:
+      context: .
+      dockerfile: docker/dev/RabbitMQ.Dockerfile
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+volumes:
+  dbdata:
+    driver: local
+  rabbitmq_data:
+    driver: local
